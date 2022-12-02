@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Parking Validator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="https://cdn3.iconfinder.com/data/icons/car-icons-front-views/451/Compact_Car_Front_View-512.png" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+</head>
+
+<body>
+
+    <div id="input-content" class="w3-center w3-container" style="margin: auto; max-width: 300px;">
+        <br>
+        <div>Validation Number:</div>
+        <input id="num" type="text" class="w3-input w3-border" value="" />
+        <br>
+
+        <button class="w3-button w3-grey w3-small" onclick="randomize()">Randomize</button>
+        <br><br><br>
+
+        <button class="w3-button w3-blue" onclick="generate(6)">6 Hour</button>
+        <button class="w3-button w3-yellow" onclick="generate(12)">12 Hour</button>
+        <br><br>
+
+        <div>6 Hour: 18400+</div>
+        <div>12 Hour: 17500+</div>
+
+    </div>
+
+
+    <div id="qr-content" class="w3-center w3-container" style="margin: auto; max-width: 300px;">
+        <br><br>
+        <div class="w3-center">
+            <div id="qrcode"></div>
+        </div>
+        <br><br><br><br>
+        <div id="qr-text"></div>
+    </div>
+
+
+    <script>
+
+        $('#qr-content').hide();
+
+        const randomize = () => {
+            const minimum = 18500;
+            const maximum = 19999;
+            const randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+            $('#num').attr('value', randomnumber);
+        }
+
+        const generate = (hours) => {
+            const num = $('#num').val();
+            const qrval = `V${hours}OFF${num}`
+            const qrcode = new QRCode(document.getElementById('qrcode'), {
+                text: qrval,
+                width: 250,
+                height: 250,
+                colorDark: '#000',
+                colorLight: '#fff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            $('#qr-text').html(qrval);
+            $('#input-content').hide();
+            $('#qr-content').show();
+        }
+
+    </script>
+
+</body>
+
+</html>
